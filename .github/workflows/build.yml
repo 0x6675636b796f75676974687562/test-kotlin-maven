@@ -7,15 +7,20 @@ on:
 jobs:
   build:
     name: Maven Build
+
     runs-on: ${{ matrix.os }}
+
     continue-on-error: true
+
     strategy:
       fail-fast: false
       matrix:
         os: [ ubuntu-latest, windows-latest ]
+
     permissions:
       checks: write
       pull-requests: write
+
     steps:
       - uses: actions/checkout@v3
 
@@ -32,13 +37,13 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: mvn test (${{ runner.os }})
+      - name: mvn test (Linux)
         if: ${{ runner.os == 'Linux' }}
         run: |
           mvn -B -T1C --fail-at-end clean test
         shell: bash
 
-      - name: mvn test (${{ runner.os }})
+      - name: mvn test (Windows)
         if: runner.os == 'Windows'
         run: |
           mvn -B -T1C --fail-at-end clean test
@@ -54,13 +59,13 @@ jobs:
           reporter: java-junit
 
         # Uses Docker, that's why Linux-only.
-      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, ${{ runner.os }})
+      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Linux)
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: ${{ runner.os == 'Linux' }}
         with:
           files: "**/target/surefire-reports/TEST-*.xml"
 
-      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, ${{ runner.os }})
+      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Windows)
         uses: EnricoMi/publish-unit-test-result-action/composite@v1
         if: ${{ runner.os == 'Windows' }}
         with:
