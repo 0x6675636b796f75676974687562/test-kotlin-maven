@@ -15,6 +15,7 @@ jobs:
         os: [ ubuntu-latest, windows-latest ]
     permissions:
       checks: write
+      pull-requests: write
     steps:
       - uses: actions/checkout@v3
 
@@ -64,19 +65,3 @@ jobs:
         if: ${{ runner.os == 'Windows' }}
         with:
           files: "**/target/surefire-reports/TEST-*.xml"
-
-      - name: Test Report 3
-        uses: mikepenz/action-junit-report@v3
-        if: always()
-        with:
-          # Uses @actions/glob, see <https://github.com/actions/toolkit/tree/master/packages/glob>.
-          # Comma-separated values not supported.
-          report_paths: "**/target/surefire-reports/TEST-*.xml"
-
-      - name: Test Report 4
-        uses: scacap/action-surefire-report@v1
-        if: always()
-        with:
-          # Uses @actions/glob, see <https://github.com/actions/toolkit/tree/master/packages/glob>.
-          # Comma-separated values, globs in the form of {foo,bar} are not understood.
-          report_paths: "**/target/surefire-reports/TEST-*.xml, **/build/test-results/*/TEST-*.xml"
