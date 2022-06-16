@@ -55,7 +55,7 @@ jobs:
         with:
           name: JUnit Tests (dorny/test-reporter@v1, ${{ runner.os }})
           # Comma-separated values.
-          path: "**/target/surefire-reports/TEST-*.xml, **/build/test-results/{test,functionalTest}/TEST-*.xml"
+          path: "**/target/{surefire,failsafe}-reports/TEST-*.xml, **/build/test-results/{test,functionalTest}/TEST-*.xml"
           reporter: java-junit
 
         # Uses Docker, that's why Linux-only.
@@ -63,10 +63,10 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: ${{ runner.os == 'Linux' }}
         with:
-          files: "**/target/surefire-reports/TEST-*.xml"
+          files: "**/target/{surefire,failsafe}-reports/TEST-*.xml"
 
       - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Windows)
         uses: EnricoMi/publish-unit-test-result-action/composite@v1
         if: ${{ runner.os == 'Windows' }}
         with:
-          files: "**/target/surefire-reports/TEST-*.xml"
+          files: "**/target/{surefire,failsafe}-reports/TEST-*.xml"
