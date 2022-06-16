@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
-          name: XML test reports
+          name: xml-test-reports-${{ runner.os }}
           path: |
             **/target/*-reports/TEST-*.xml
             **/build/test-results/*/TEST-*.xml
@@ -76,6 +76,11 @@ jobs:
       pull-requests: write
 
     steps:
+      - uses: actions/download-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: xml-test-reports-${{ runner.os }}
+
         # Uses Docker, that's why Linux-only.
       - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Linux)
         uses: EnricoMi/publish-unit-test-result-action@v1
@@ -95,6 +100,11 @@ jobs:
       pull-requests: write
 
     steps:
+      - uses: actions/download-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: xml-test-reports-${{ runner.os }}
+
       - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Windows)
         uses: EnricoMi/publish-unit-test-result-action/composite@v1
         if: ${{ runner.os == 'Windows' }}
