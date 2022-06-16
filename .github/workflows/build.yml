@@ -51,9 +51,9 @@ jobs:
           path: "target/surefire-reports/TEST-*.xml, build/test-results/{test,functionalTest}/TEST-*.xml"
           reporter: java-junit
 
-      - name: Test Report 2
+      - name: Test Report 2 (Linux only)
         uses: EnricoMi/publish-unit-test-result-action@v1
-        if: always()
+        if: ${{ runner.os == 'Linux' }}
         with:
           files: "target/surefire-reports/TEST-*.xml"
 
