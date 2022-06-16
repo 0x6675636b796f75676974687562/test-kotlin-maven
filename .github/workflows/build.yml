@@ -43,28 +43,40 @@ jobs:
           mvn -B -T1C --fail-at-end clean test
         shell: cmd
 
-      - name: Test Report 1
+      - name: JUnit Tests (dorny/test-reporter@v1)
         uses: dorny/test-reporter@v1
         if: always()
         with:
           name: JUnit Tests (dorny/test-reporter@v1)
-          path: "target/surefire-reports/TEST-*.xml, build/test-results/{test,functionalTest}/TEST-*.xml"
+          # Comma-separated values.
+          path: "**/target/surefire-reports/TEST-*.xml, **/build/test-results/{test,functionalTest}/TEST-*.xml"
           reporter: java-junit
 
-      - name: Test Report 2 (Linux only)
+        # Uses Docker, that's why Linux-only.
+      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Linux)
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: ${{ runner.os == 'Linux' }}
         with:
-          files: "target/surefire-reports/TEST-*.xml"
+          files: "**/target/surefire-reports/TEST-*.xml"
+
+      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Windows)
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        if: ${{ runner.os == 'Windows' }}
+        with:
+          files: "**/target/surefire-reports/TEST-*.xml"
 
       - name: Test Report 3
         uses: mikepenz/action-junit-report@v3
         if: always()
         with:
-          report_paths: "target/surefire-reports/TEST-*.xml"
+          # Uses @actions/glob, see <https://github.com/actions/toolkit/tree/master/packages/glob>.
+          # Comma-separated values not supported.
+          report_paths: "**/target/surefire-reports/TEST-*.xml"
 
       - name: Test Report 4
         uses: scacap/action-surefire-report@v1
         if: always()
         with:
-          report_paths: "target/surefire-reports/TEST-*.xml, build/test-results/{test,functionalTest}/TEST-*.xml"
+          # Uses @actions/glob, see <https://github.com/actions/toolkit/tree/master/packages/glob>.
+          # Comma-separated values, globs in the form of {foo,bar} are not understood.
+          report_paths: "**/target/surefire-reports/TEST-*.xml, **/build/test-results/*/TEST-*.xml"
