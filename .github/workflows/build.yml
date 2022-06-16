@@ -55,7 +55,7 @@ jobs:
         with:
           name: JUnit Tests (dorny/test-reporter@v1, ${{ runner.os }})
           # Comma-separated values.
-          path: "**/target/{surefire,failsafe}-reports/TEST-*.xml, **/build/test-results/{test,functionalTest}/TEST-*.xml"
+          path: "**/target/*-reports/TEST-*.xml, **/build/test-results/*/TEST-*.xml"
           reporter: java-junit
 
         # Uses Docker, that's why Linux-only.
