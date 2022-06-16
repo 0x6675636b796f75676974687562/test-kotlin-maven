@@ -54,12 +54,13 @@ jobs:
           path: |
             **/target/*-reports/TEST-*.xml
             **/build/test-results/*/TEST-*.xml
+          retention-days: 1
 
       - name: JUnit Tests (dorny/test-reporter@v1, ${{ runner.os }})
         uses: dorny/test-reporter@v1
         if: ${{ always() }}
         with:
-          name: JUnit Tests (dorny/test-reporter@v1, ${{ runner.os }})
+          name: JUnit Tests (${{ runner.os }})
           # Comma-separated values.
           path: "**/target/*-reports/TEST-*.xml, **/build/test-results/*/TEST-*.xml"
           reporter: java-junit
