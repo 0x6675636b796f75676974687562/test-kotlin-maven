@@ -46,6 +46,18 @@ jobs:
           mvn -B -T1C --fail-at-end clean test
         shell: cmd
 
+	# This step needs a Git repository, so it's impossible to extract it
+	# into a separate job (or, otherwise, we'd need to upload the content
+	# of the whole `.git` folder as an artifact).
+      - name: JUnit Tests (dorny/test-reporter@v1, ${{ runner.os }})
+        uses: dorny/test-reporter@v1
+        if: ${{ always() }}
+        with:
+          name: JUnit Tests (${{ runner.os }})
+          # Comma-separated values.
+          path: "**/target/*-reports/TEST-*.xml, **/build/test-results/*/TEST-*.xml"
+          reporter: java-junit
+
       - name: Upload test results
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
@@ -57,17 +69,13 @@ jobs:
           retention-days: 1
 
 
-  report:
-    name: Publish JUnit test results
+  # We run this step on a single OS only because multiple reports have the same
+  # name and overwrite each other.
+  report-linux:
+    name: Publish JUnit test results (Linux)
     if: ${{ always() }}
     needs: build_and_test
-    runs-on: ${{ matrix.os }}
-    continue-on-error: true
-
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    runs-on: ubuntu-latest
 
     permissions:
       checks: write
@@ -79,18 +87,15 @@ jobs:
         with:
           name: xml-test-reports-${{ runner.os }}
 
-      - name: JUnit Tests (dorny/test-reporter@v1, ${{ runner.os }})
-        uses: dorny/test-reporter@v1
-        if: ${{ always() }}
-        with:
-          name: JUnit Tests (${{ runner.os }})
-          # Comma-separated values.
-          path: "**/target/*-reports/TEST-*.xml, **/build/test-results/*/TEST-*.xml"
-          reporter: java-junit
-
         # Uses Docker, that's why Linux-only.
       - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Linux)
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: ${{ runner.os == 'Linux' }}
+        with:
+          files: "**/target/*-reports/TEST-*.xml"
+
+      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Windows or Mac OS X)
+        uses: EnricoMi/publish-unit-test-result-action/composite@v1
+        if: ${{ runner.os == 'Windows' || runner.os == 'macOS' }}
         with:
           files: "**/target/*-reports/TEST-*.xml"
