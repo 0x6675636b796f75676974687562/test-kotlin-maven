@@ -7,7 +7,6 @@ on:
 jobs:
   build:
     name: Maven Build
-
     runs-on: ${{ matrix.os }}
 
     # `continue-on-error` applies to a single job. If `true`, other jobs in the matrix will continue running even if the job with `continue-on-error: true` fails.
@@ -42,14 +41,23 @@ jobs:
         shell: bash
 
       - name: mvn test (Windows)
-        if: runner.os == 'Windows'
+        if: ${{ runner.os == 'Windows' }}
         run: |
           mvn -B -T1C --fail-at-end clean test
         shell: cmd
 
+      - name: Archive test results
+        uses: actions/upload-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: XML test reports
+          path: |
+            **/target/*-reports/TEST-*.xml
+            **/build/test-results/*/TEST-*.xml
+
       - name: JUnit Tests (dorny/test-reporter@v1, ${{ runner.os }})
         uses: dorny/test-reporter@v1
-        if: always()
+        if: ${{ always() }}
         with:
           name: JUnit Tests (dorny/test-reporter@v1, ${{ runner.os }})
           # Comma-separated values.
@@ -59,9 +67,8 @@ jobs:
 
   report-linux:
     name: Publish JUnit test results (Linux)
-
+    if: ${{ always() }}
     needs: build
-
     runs-on: ubuntu-latest
 
     permissions:
@@ -79,9 +86,8 @@ jobs:
 
   report-windows:
     name: Publish JUnit test results (Windows)
-
+    if: ${{ always() }}
     needs: build
-
     runs-on: windows-latest
 
     permissions:
