@@ -53,7 +53,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: ${{ always() }}
         with:
-          name: JUnit Tests (${{ runner.os }})
+          name: JUnit Tests (${{ runner.os }}, dorny/test-reporter@v1)
           # Comma-separated values.
           path: "**/target/*-reports/TEST-*.xml, **/build/test-results/*/TEST-*.xml"
           reporter: java-junit
@@ -69,13 +69,17 @@ jobs:
           retention-days: 1
 
 
-  # We run this step on a single OS only because multiple reports have the same
-  # name and overwrite each other.
-  report-linux:
-    name: Publish JUnit test results (Linux)
+  report:
+    name: Publish JUnit test results
     if: ${{ always() }}
     needs: build_and_test
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
 
     permissions:
       checks: write
@@ -88,20 +92,20 @@ jobs:
           name: xml-test-reports-${{ runner.os }}
 
         # Uses Docker, that's why Linux-only.
-      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Linux)
+      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action@v1, Linux)
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: ${{ runner.os == 'Linux' }}
         with:
-          check_name: JUnit Tests (${{ runner.os }})
+          check_name: JUnit Tests (${{ runner.os }}, EnricoMi/publish-unit-test-result-action@v1)
           files: |
             **/target/*-reports/TEST-*.xml
             **/build/test-results/*/TEST-*.xml
 
-      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Windows or Mac OS X)
+      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action@v1, Windows or Mac OS X)
         uses: EnricoMi/publish-unit-test-result-action/composite@v1
         if: ${{ runner.os == 'Windows' || runner.os == 'macOS' }}
         with:
-          check_name: JUnit Tests (${{ runner.os }})
+          check_name: JUnit Tests (${{ runner.os }}, EnricoMi/publish-unit-test-result-action@v1)
           files: |
             **/target/*-reports/TEST-*.xml
             **/build/test-results/*/TEST-*.xml
