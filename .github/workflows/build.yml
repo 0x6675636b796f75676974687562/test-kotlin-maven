@@ -32,19 +32,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: mvn test (Linux)
+      - name: mvn test (${{ runner.os }})
         if: ${{ runner.os == 'Linux' }}
         run: |
           mvn -B -T1C --fail-at-end clean test
         shell: bash
 
-      - name: mvn test (Windows)
+      - name: mvn test (${{ runner.os }})
         if: runner.os == 'Windows'
         run: |
           mvn -B -T1C --fail-at-end clean test
         shell: cmd
 
-      - name: JUnit Tests (dorny/test-reporter@v1)
+      - name: JUnit Tests (dorny/test-reporter@v1, ${{ runner.os }})
         uses: dorny/test-reporter@v1
         if: always()
         with:
@@ -54,13 +54,13 @@ jobs:
           reporter: java-junit
 
         # Uses Docker, that's why Linux-only.
-      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Linux)
+      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, ${{ runner.os }})
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: ${{ runner.os == 'Linux' }}
         with:
           files: "**/target/surefire-reports/TEST-*.xml"
 
-      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Windows)
+      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, ${{ runner.os }})
         uses: EnricoMi/publish-unit-test-result-action/composite@v1
         if: ${{ runner.os == 'Windows' }}
         with:
