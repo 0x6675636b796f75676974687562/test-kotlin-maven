@@ -61,12 +61,12 @@ jobs:
         # Uses Docker, that's why Linux-only.
       - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Linux)
         uses: EnricoMi/publish-unit-test-result-action@v1
-        if: ${{ runner.os == 'Linux' }}
+        if: always() && ${{ runner.os == 'Linux' }}
         with:
           files: "**/target/{surefire,failsafe}-reports/TEST-*.xml"
 
       - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Windows)
         uses: EnricoMi/publish-unit-test-result-action/composite@v1
-        if: ${{ runner.os == 'Windows' }}
+        if: always() && ${{ runner.os == 'Windows' }}
         with:
           files: "**/target/{surefire,failsafe}-reports/TEST-*.xml"
