@@ -5,7 +5,7 @@ on:
   push:
 
 jobs:
-  build:
+  build_and_test:
     name: Maven Build
     runs-on: ${{ matrix.os }}
 
@@ -16,7 +16,7 @@ jobs:
       # If `fail-fast` is set to `true`, GitHub will cancel all in-progress and queued jobs in the matrix if any job in the matrix fails.
       fail-fast: false
       matrix:
-        os: [ ubuntu-latest, windows-latest ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
 
     steps:
       - uses: actions/checkout@v3
@@ -35,7 +35,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: mvn test (Linux)
-        if: ${{ runner.os == 'Linux' }}
+        if: ${{ runner.os == 'Linux' || runner.os == 'macOS' }}
         run: |
           mvn -B -T1C --fail-at-end clean test
         shell: bash
@@ -46,7 +46,7 @@ jobs:
           mvn -B -T1C --fail-at-end clean test
         shell: cmd
 
-      - name: Archive test results
+      - name: Upload test results
         uses: actions/upload-artifact@v3
         if: ${{ always() }}
         with:
@@ -55,6 +55,29 @@ jobs:
             **/target/*-reports/TEST-*.xml
             **/build/test-results/*/TEST-*.xml
           retention-days: 1
+
+
+  report:
+    name: Publish JUnit test results
+    if: ${{ always() }}
+    needs: build_and_test
+    runs-on: ${{ matrix.os }}
+    continue-on-error: true
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+
+    permissions:
+      checks: write
+      pull-requests: write
+
+    steps:
+      - uses: actions/download-artifact@v3
+        if: ${{ always() }}
+        with:
+          name: xml-test-reports-${{ runner.os }}
 
       - name: JUnit Tests (dorny/test-reporter@v1, ${{ runner.os }})
         uses: dorny/test-reporter@v1
@@ -65,49 +88,9 @@ jobs:
           path: "**/target/*-reports/TEST-*.xml, **/build/test-results/*/TEST-*.xml"
           reporter: java-junit
 
-
-  report-linux:
-    name: Publish JUnit test results (Linux)
-    if: ${{ always() }}
-    needs: build
-    runs-on: ubuntu-latest
-
-    permissions:
-      checks: write
-      pull-requests: write
-
-    steps:
-      - uses: actions/download-artifact@v3
-        if: ${{ always() }}
-        with:
-          name: xml-test-reports-${{ runner.os }}
-
         # Uses Docker, that's why Linux-only.
       - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Linux)
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: ${{ runner.os == 'Linux' }}
-        with:
-          files: "**/target/*-reports/TEST-*.xml"
-
-
-  report-windows:
-    name: Publish JUnit test results (Windows)
-    if: ${{ always() }}
-    needs: build
-    runs-on: windows-latest
-
-    permissions:
-      checks: write
-      pull-requests: write
-
-    steps:
-      - uses: actions/download-artifact@v3
-        if: ${{ always() }}
-        with:
-          name: xml-test-reports-${{ runner.os }}
-
-      - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Windows)
-        uses: EnricoMi/publish-unit-test-result-action/composite@v1
-        if: ${{ runner.os == 'Windows' }}
         with:
           files: "**/target/*-reports/TEST-*.xml"
