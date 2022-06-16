@@ -46,9 +46,9 @@ jobs:
           mvn -B -T1C --fail-at-end clean test
         shell: cmd
 
-	# This step needs a Git repository, so it's impossible to extract it
-	# into a separate job (or, otherwise, we'd need to upload the content
-	# of the whole `.git` folder as an artifact).
+        # This step needs a Git repository, so it's impossible to extract it
+        # into a separate job (or, otherwise, we'd need to upload the content
+        # of the whole `.git` folder as an artifact).
       - name: JUnit Tests (dorny/test-reporter@v1, ${{ runner.os }})
         uses: dorny/test-reporter@v1
         if: ${{ always() }}
@@ -92,10 +92,16 @@ jobs:
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: ${{ runner.os == 'Linux' }}
         with:
-          files: "**/target/*-reports/TEST-*.xml"
+          check_name: JUnit Tests (${{ runner.os }})
+          files: |
+            **/target/*-reports/TEST-*.xml
+            **/build/test-results/*/TEST-*.xml
 
       - name: Unit Test Results (EnricoMi/publish-unit-test-result-action, Windows or Mac OS X)
         uses: EnricoMi/publish-unit-test-result-action/composite@v1
         if: ${{ runner.os == 'Windows' || runner.os == 'macOS' }}
         with:
-          files: "**/target/*-reports/TEST-*.xml"
+          check_name: JUnit Tests (${{ runner.os }})
+          files: |
+            **/target/*-reports/TEST-*.xml
+            **/build/test-results/*/TEST-*.xml
