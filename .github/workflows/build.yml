@@ -48,7 +48,7 @@ jobs:
         uses: dorny/test-reporter@v1
         if: always()
         with:
-          name: JUnit Tests (dorny/test-reporter@v1)
+          name: JUnit Tests (dorny/test-reporter@v1, ${{ runner.os }})
           # Comma-separated values.
           path: "**/target/surefire-reports/TEST-*.xml, **/build/test-results/{test,functionalTest}/TEST-*.xml"
           reporter: java-junit
