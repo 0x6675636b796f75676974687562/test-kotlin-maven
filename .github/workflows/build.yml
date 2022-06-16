@@ -48,23 +48,23 @@ jobs:
         if: always()
         with:
           name: JUnit Tests (dorny/test-reporter@v1)
-          path: "(target/surefire-reports|build/test-results/{test,functionalTest})/TEST-*.xml"
+          path: "target/surefire-reports/TEST-*.xml, build/test-results/{test,functionalTest}/TEST-*.xml"
           reporter: java-junit
 
       - name: Test Report 2
         uses: EnricoMi/publish-unit-test-result-action@v1
         if: always()
         with:
-          files: "(target/surefire-reports|build/test-results/{test,functionalTest})/TEST-*.xml"
+          files: "target/surefire-reports/TEST-*.xml, build/test-results/{test,functionalTest}/TEST-*.xml"
 
       - name: Test Report 3
         uses: mikepenz/action-junit-report@v3
         if: always()
         with:
-          report_paths: "(target/surefire-reports|build/test-results/{test,functionalTest})/TEST-*.xml"
+          report_paths: "target/surefire-reports/TEST-*.xml, build/test-results/{test,functionalTest}/TEST-*.xml"
 
       - name: Test Report 4
         uses: scacap/action-surefire-report@v1
         if: always()
         with:
-          report_paths: "(target/surefire-reports|build/test-results/{test,functionalTest})/TEST-*.xml"
+          report_paths: "target/surefire-reports/TEST-*.xml, build/test-results/{test,functionalTest}/TEST-*.xml"
