@@ -71,7 +71,7 @@
 			</plugin>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.5.1</version>
+				<version>3.8.1</version>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
@@ -111,6 +111,39 @@
 						<include>**/*.java</include>
 					</includes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jetbrains.dokka</groupId>
+				<artifactId>dokka-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>package-javadocs</id>
+						<phase>package</phase>
+						<goals>
+							<goal>javadocJar</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>publish-javadocs</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>javadoc</goal>
+						</goals>
+						<configuration>
+							<outputDir>${project.reporting.outputDirectory}/apidocs</outputDir>
+						</configuration>
+					</execution>
+					<execution>
+						<id>publish-dokka</id>
+						<phase>pre-site</phase>
+						<goals>
+							<goal>dokka</goal>
+						</goals>
+						<configuration>
+							<outputDir>${project.reporting.outputDirectory}/dokka</outputDir>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
@@ -162,4 +195,56 @@
 			</exclusions>
 		</dependency>
 	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>javadoc</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jetbrains.dokka</groupId>
+						<artifactId>dokka-maven-plugin</artifactId>
+						<configuration>
+							<dokkaPlugins>
+								<plugin>
+									<groupId>org.jetbrains.dokka</groupId>
+									<artifactId>kotlin-as-java-plugin</artifactId>
+								</plugin>
+							</dokkaPlugins>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+
+			<reporting>
+				<plugins>
+					<plugin>
+						<groupId>org.jetbrains.dokka</groupId>
+						<artifactId>dokka-maven-plugin</artifactId>
+						<configuration>
+							<dokkaPlugins>
+								<plugin>
+									<groupId>org.jetbrains.dokka</groupId>
+									<artifactId>kotlin-as-java-plugin</artifactId>
+								</plugin>
+							</dokkaPlugins>
+						</configuration>
+					</plugin>
+				</plugins>
+			</reporting>
+		</profile>
+	</profiles>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.jetbrains.dokka</groupId>
+				<artifactId>dokka-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>
