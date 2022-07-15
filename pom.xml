@@ -5,6 +5,14 @@
 	<artifactId>test-kotlin-maven</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
+	<licenses>
+		<license>
+			<name>Apache License, Version 2.0</name>
+			<url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -209,6 +217,10 @@
 						<groupId>org.jetbrains.dokka</groupId>
 						<artifactId>dokka-maven-plugin</artifactId>
 						<configuration>
+							<sourceDirectories>
+								<dir>${project.basedir}/src/main/kotlin</dir>
+								<dir>${project.basedir}/src/test/kotlin</dir>
+							</sourceDirectories>
 							<dokkaPlugins>
 								<plugin>
 									<groupId>org.jetbrains.dokka</groupId>
@@ -226,6 +238,10 @@
 						<groupId>org.jetbrains.dokka</groupId>
 						<artifactId>dokka-maven-plugin</artifactId>
 						<configuration>
+							<sourceDirectories>
+								<dir>${project.basedir}/src/main/kotlin</dir>
+								<dir>${project.basedir}/src/test/kotlin</dir>
+							</sourceDirectories>
 							<dokkaPlugins>
 								<plugin>
 									<groupId>org.jetbrains.dokka</groupId>

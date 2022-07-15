@@ -1,0 +1,21 @@
+﻿<project xmlns="https://maven.apache.org/DECORATION/1.8.0"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="https://maven.apache.org/DECORATION/1.8.0 https://maven.apache.org/xsd/decoration-1.8.0.xsd"
+         name="${project.name}">
+	<bannerLeft>
+		<name>${project.name}</name>
+	</bannerLeft>
+	<publishDate/>
+	<version/>
+	<body>
+		<links>
+			<item name="${project.name}" href="${project.url}"/>
+		</links>
+		<menu ref="parent"/>
+		<menu ref="reports"/>
+		<menu name="Project Reports">
+			<item name="Javadoc" href="apidocs/index.html"/>
+			<item name="Dokka" href="dokka/index.html"/>
+		</menu>
+	</body>
+</project>
