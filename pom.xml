@@ -8,11 +8,37 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<kotlin.version>1.7.0</kotlin.version>
+		<kotlin.version>1.7.10</kotlin.version>
+		<dokka.version>1.7.10</dokka.version>
 		<spring.version>[4.2.9, 4.3)</spring.version>
 	</properties>
 
 	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-project-info-reports-plugin</artifactId>
+					<version>3.3.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.11.0</version>
+				</plugin>
+				<plugin>
+					<groupId>org.jetbrains.dokka</groupId>
+					<artifactId>dokka-maven-plugin</artifactId>
+					<version>${dokka.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.jetbrains.dokka</groupId>
+					<artifactId>kotlin-as-java-plugin</artifactId>
+					<version>${dokka.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+
 		<plugins>
 			<plugin>
 				<groupId>org.jetbrains.kotlin</groupId>
