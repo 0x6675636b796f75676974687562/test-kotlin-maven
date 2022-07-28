@@ -143,7 +143,29 @@
 					<includes>
 						<include>**/*.java</include>
 					</includes>
+					<excludes>
+						<exclude>**/*IntegrationTest.*</exclude>
+					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-failsafe-plugin</artifactId>
+				<version>3.0.0-M7</version>
+				<configuration>
+					<failIfNoTests>true</failIfNoTests>
+					<rerunFailingTestsCount>0</rerunFailingTestsCount>
+					<includes>
+						<include>**/*IntegrationTest.*</include>
+					</includes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>integration-test</goal>
+							<goal>verify</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 			<plugin>
 				<groupId>org.jetbrains.dokka</groupId>
