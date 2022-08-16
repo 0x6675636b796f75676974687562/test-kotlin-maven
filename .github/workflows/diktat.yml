@@ -1,0 +1,14 @@
+name: 'diKTat Check'
+
+jobs:
+  build_and_test:
+    name: 'diKTat Check'
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+
+    steps:
+      - uses: 0x6675636b796f75676974687562/benedikt@master
