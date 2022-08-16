@@ -1,4 +1,5 @@
-name: 'diKTat Check Workflow'
+# The name of the workflow, as shouwn in the list of workflows.
+name: 'diKTat Check'
 
 on:
   pull_request:
@@ -7,7 +8,8 @@ on:
 
 jobs:
   diktat_check:
-    name: 'diKTat Check Job'
+    # The name of the job within the workflow.
+    name: 'diKTat Check'
     runs-on: ${{ matrix.os }}
 
     strategy:
