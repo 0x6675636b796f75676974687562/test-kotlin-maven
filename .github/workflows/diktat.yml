@@ -1,4 +1,4 @@
-name: 'diKTat Check'
+name: 'diKTat Check Workflow'
 
 on:
   pull_request:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   diktat_check:
-    name: 'diKTat Check'
+    name: 'diKTat Check Job'
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -16,4 +16,5 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
 
     steps:
-      - uses: 0x6675636b796f75676974687562/benedikt@master
+      - name: 'diKTat Check using a GitHub Action'
+        uses: 0x6675636b796f75676974687562/benedikt@master
