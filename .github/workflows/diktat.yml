@@ -3,6 +3,7 @@ name: 'diKTat Check'
 on:
   pull_request:
   push:
+  workflow_dispatch:
 
 jobs:
   build_and_test:
