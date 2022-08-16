@@ -1,0 +1,31 @@
+name: 'diKTat Check, Ubuntu Linux'
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+    inputs:
+      fail-on-error:
+        description: 'Treat linter errors as fatal'
+        type: boolean
+        default: false
+        required: false
+
+jobs:
+  diktat_check:
+    name: 'diKTat Check'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: diktat
+        name: 'diKTat Check using a GitHub Action'
+        uses: saveourtool/benedikt@v1
+        with:
+          fail-on-error: ${{ inputs.fail-on-error }}
+
+      - name: 'Read the exit code of diKTat'
+        if: ${{ always() }}
+        run: echo "diKTat exited with code ${{ steps.diktat.outputs.exit-code }}"
+        shell: bash

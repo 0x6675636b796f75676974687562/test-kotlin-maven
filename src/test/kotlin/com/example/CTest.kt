@@ -7,8 +7,8 @@ import org.junit.runners.JUnit4
 
 @RunWith(JUnit4::class)
 class CTest {
-    @Test
-    fun t() {
-        assertEquals(42, C.f())
-    }
+	@Test
+	fun t() {
+		assertEquals(42, C.f())
+	}
 }

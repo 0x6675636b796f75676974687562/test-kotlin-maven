@@ -1,0 +1,23 @@
+name: 'diKTat Check, Mac OS X, prompt'
+
+on:
+  workflow_dispatch:
+    inputs:
+      debug:
+        description: 'Enable debug logging'
+        type: boolean
+        default: false
+        required: false
+
+jobs:
+  diktat_check:
+    name: 'diKTat Check'
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 'diKTat Check using a GitHub Action'
+        uses: saveourtool/benedikt@v1
+        with:
+          debug: ${{ inputs.debug }}
