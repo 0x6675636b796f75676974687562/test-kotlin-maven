@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_and_test:
+  diktat_check:
     name: 'diKTat Check'
     runs-on: ${{ matrix.os }}
 
