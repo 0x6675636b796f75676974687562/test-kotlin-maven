@@ -1,4 +1,4 @@
-# The name of the workflow, as shouwn in the list of workflows.
+# The name of the workflow, as shown in the list of workflows.
 name: 'diKTat Check'
 
 on:

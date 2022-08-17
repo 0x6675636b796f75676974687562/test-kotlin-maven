@@ -1,0 +1,18 @@
+name: 'diKTat Check, Mac OS X, release'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diktat_check:
+    name: 'diKTat Check'
+    runs-on: macos-latest
+
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: 'diKTat Check using a GitHub Action'
+        uses: 0x6675636b796f75676974687562/benedikt@master
+        with:
+          debug: ${{ false }}
