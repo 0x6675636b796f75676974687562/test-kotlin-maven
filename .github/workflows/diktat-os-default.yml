@@ -1,0 +1,15 @@
+name: 'diKTat Check, default OS'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  diktat_check:
+    name: 'diKTat Check'
+
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: 'diKTat Check using a GitHub Action'
+        uses: 0x6675636b796f75676974687562/benedikt@master

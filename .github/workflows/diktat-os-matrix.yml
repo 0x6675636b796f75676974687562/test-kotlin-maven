@@ -1,9 +1,7 @@
 # The name of the workflow, as shown in the list of workflows.
-name: 'diKTat Check'
+name: 'diKTat Check, matrix'
 
 on:
-  pull_request:
-  push:
   workflow_dispatch:
 
 jobs:
