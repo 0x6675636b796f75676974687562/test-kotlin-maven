@@ -1,4 +1,4 @@
-name: 'diKTat Check, default OS'
+name: 'diKTat Check, Ubuntu Linux'
 
 on:
   workflow_dispatch:
@@ -6,6 +6,7 @@ on:
 jobs:
   diktat_check:
     name: 'diKTat Check'
+    runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
