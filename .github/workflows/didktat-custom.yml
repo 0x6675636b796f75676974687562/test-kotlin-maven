@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       debug:
-        description: 'Whether debug logging should be enabled'
+        description: 'Enable debug logging'
         type: boolean
         default: ${{ false }}
         required: false
