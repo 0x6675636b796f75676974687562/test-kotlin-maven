@@ -6,7 +6,7 @@ on:
       debug:
         description: 'Enable debug logging'
         type: boolean
-        default: ${{ false }}
+        default: false
         required: false
 
 jobs:
