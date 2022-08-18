@@ -19,5 +19,5 @@ jobs:
         uses: 0x6675636b796f75676974687562/benedikt@master
 
       - name: 'Read the exit code of diKTat'
-        run: echo "diKTat exited with code ${{ diktat.outputs.exit-code }}"
+        run: echo "diKTat exited with code ${{ steps.diktat.outputs.exit-code }}"
         shell: bash
