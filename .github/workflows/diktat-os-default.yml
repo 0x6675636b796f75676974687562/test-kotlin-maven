@@ -14,9 +14,6 @@ jobs:
     name: 'diKTat Check'
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-
     steps:
       - uses: actions/checkout@v3
 

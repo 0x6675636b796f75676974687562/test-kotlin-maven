@@ -8,9 +8,6 @@ jobs:
     name: 'diKTat Check'
     runs-on: macos-latest
 
-    strategy:
-      fail-fast: false
-
     steps:
       - uses: actions/checkout@v3
 
