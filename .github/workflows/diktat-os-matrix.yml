@@ -16,5 +16,7 @@ jobs:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
 
     steps:
+      - uses: actions/checkout@v3
+
       - name: 'diKTat Check using a GitHub Action'
         uses: 0x6675636b796f75676974687562/benedikt@master
