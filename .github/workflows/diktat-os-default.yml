@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       fail-on-error:
-        description: 'Whether linter errors are considered fatal'
+        description: 'Treat linter errors as fatal'
         type: boolean
         default: false
         required: false
