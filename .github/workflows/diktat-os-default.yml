@@ -2,6 +2,12 @@ name: 'diKTat Check, Ubuntu Linux'
 
 on:
   workflow_dispatch:
+    inputs:
+      fail-on-error:
+        description: 'Whether linter errors are considered fatal'
+        type: boolean
+        default: false
+        required: false
 
 jobs:
   diktat_check:
@@ -17,6 +23,8 @@ jobs:
       - id: diktat
         name: 'diKTat Check using a GitHub Action'
         uses: 0x6675636b796f75676974687562/benedikt@master
+        with:
+          fail-on-error: ${{ inputs.fail-on-error }}
 
       - name: 'Read the exit code of diKTat'
         if: ${{ always() }}
