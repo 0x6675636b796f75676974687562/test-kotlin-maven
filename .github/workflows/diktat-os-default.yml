@@ -19,7 +19,7 @@ jobs:
 
       - id: diktat
         name: 'diKTat Check using a GitHub Action'
-        uses: 0x6675636b796f75676974687562/benedikt@master
+        uses: 0x6675636b796f75676974687562/benedi.kt@master
         with:
           fail-on-error: ${{ inputs.fail-on-error }}
 
