@@ -4,6 +4,11 @@ name: 'diKTat Check, matrix'
 on:
   workflow_dispatch:
     inputs:
+      config:
+        description: 'The location of the YAML configuration file'
+        type: string
+        default: 'diktat-analysis.yml'
+        required: false
       fail-on-error:
         description: 'Treat linter errors as fatal'
         type: boolean
