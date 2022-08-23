@@ -32,4 +32,5 @@ jobs:
       - name: 'diKTat Check using a GitHub Action'
         uses: 0x6675636b796f75676974687562/benedi.kt@master
         with:
+          config: ${{ inputs.config }}
           fail-on-error: ${{ inputs.fail-on-error }}
