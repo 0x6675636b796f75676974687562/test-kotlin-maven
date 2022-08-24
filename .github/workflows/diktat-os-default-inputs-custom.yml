@@ -1,27 +1,14 @@
-name: 'diKTat Check, Ubuntu Linux (customizable input paths)'
+name: 'diKTat Check, Ubuntu Linux (customizable input path)'
 
 on:
   workflow_dispatch:
     inputs:
       input-paths:
         description: >
-          One or more patterns which indicate the files or directories to check.
-          Use a multiline string to specify multiple inputs.
-    
-          If an input is a path to a file, it is passed to diKTat as-is.
-    
-          If an input is a path to a directory, the directory is recursively
-          traversed, and all *.kt and *.kts files are passed to diKTat.
-    
-          If an input is an Ant-like path pattern (such as "**/*.kt"), diKTat
-          expands it into the list of files that match the path pattern. Path
-          patterns may be negated, e. g.: "!src/**/*Test.kt" or
-          "!src/**/generated/**".
+          An Ant-style path pattern which indicates the files or directories to
+          check.
         type: string
-        default: |
-          **/*.kt
-          **/*.kts
-          !**/generated/**
+        default: '**/*.kt'
         required: false
       fail-on-error:
         description: 'Treat linter errors as fatal'
