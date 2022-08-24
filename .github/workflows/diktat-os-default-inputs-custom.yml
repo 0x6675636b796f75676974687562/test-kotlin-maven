@@ -1,0 +1,50 @@
+name: 'diKTat Check, Ubuntu Linux (customizable input paths)'
+
+on:
+  workflow_dispatch:
+    inputs:
+      input-paths:
+        description: >
+          One or more patterns which indicate the files or directories to check.
+          Use a multiline string to specify multiple inputs.
+    
+          If an input is a path to a file, it is passed to diKTat as-is.
+    
+          If an input is a path to a directory, the directory is recursively
+          traversed, and all *.kt and *.kts files are passed to diKTat.
+    
+          If an input is an Ant-like path pattern (such as "**/*.kt"), diKTat
+          expands it into the list of files that match the path pattern. Path
+          patterns may be negated, e. g.: "!src/**/*Test.kt" or
+          "!src/**/generated/**".
+        type: string
+        default: |
+          **/*.kt
+          **/*.kts
+          !**/generated/**
+        required: false
+      fail-on-error:
+        description: 'Treat linter errors as fatal'
+        type: boolean
+        default: false
+        required: false
+
+jobs:
+  diktat_check:
+    name: 'diKTat Check'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - id: diktat
+        name: 'diKTat Check using a GitHub Action'
+        uses: 0x6675636b796f75676974687562/benedi.kt@master
+        with:
+          input-paths: ${{ inputs.input-paths }}
+          fail-on-error: ${{ inputs.fail-on-error }}
+
+      - name: 'Read the exit code of diKTat'
+        if: ${{ always() }}
+        run: echo "diKTat exited with code ${{ steps.diktat.outputs.exit-code }}"
+        shell: bash
