@@ -8,7 +8,6 @@ on:
           An Ant-style path pattern which indicates the files or directories to
           check
         type: string
-        default: '**/*.kt'
         required: false
       fail-on-error:
         description: 'Treat linter errors as fatal'
