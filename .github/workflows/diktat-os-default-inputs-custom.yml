@@ -6,7 +6,7 @@ on:
       input-paths:
         description: >
           An Ant-style path pattern which indicates the files or directories to
-          check.
+          check
         type: string
         default: '**/*.kt'
         required: false
