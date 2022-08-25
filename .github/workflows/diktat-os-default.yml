@@ -1,6 +1,8 @@
 name: 'diKTat Check, Ubuntu Linux'
 
 on:
+  pull_request:
+  push:
   workflow_dispatch:
     inputs:
       fail-on-error:
