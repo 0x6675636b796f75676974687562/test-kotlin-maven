@@ -1,5 +1,8 @@
 package com.example
 
+/**
+ * This is a simple class covered by both unit and integration tests.
+ */
 object C {
 	/**
 	 * @return 42
