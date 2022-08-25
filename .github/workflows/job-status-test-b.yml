@@ -1,0 +1,23 @@
+name: 'Job status test (B)'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  main:
+    name: 'Default job'
+    runs-on: ubuntu-latest
+
+    steps:
+      - id: main
+        name: 'Main (will always fail)'
+        run: |
+          exit 1
+        shell: bash
+
+      - id: teardown
+        name: 'Tear-down, calls `always()`'
+        if: ${{ always() }}
+        run: |
+          echo 'This is the tear-down step'
+        shell: bash
