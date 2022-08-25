@@ -1,0 +1,34 @@
+name: 'diKTat Check, matrix, custom JDK'
+
+on:
+  workflow_dispatch:
+    inputs:
+      config:
+        description: 'The location of the YAML configuration file'
+        type: string
+        default: 'diktat-analysis.yml'
+        required: false
+      fail-on-error:
+        description: 'Treat linter errors as fatal'
+        type: boolean
+        default: false
+        required: false
+
+jobs:
+  diktat_check:
+    name: 'diKTat Check'
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 'diKTat Check using a GitHub Action'
+        uses: 0x6675636b796f75676974687562/benedi.kt@master
+        with:
+          config: ${{ inputs.config }}
+          fail-on-error: ${{ inputs.fail-on-error }}
+          java-version: '17'
