@@ -9,6 +9,6 @@ import org.junit.runners.JUnit4
 class CTest {
 	@Test
 	fun t() {
-		assertEquals(42, C.f())
+		assertEquals(42, C.f)
 	}
 }

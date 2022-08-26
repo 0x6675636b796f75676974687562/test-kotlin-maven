@@ -7,9 +7,9 @@ object C {
 	/**
 	 * @return 42
 	 */
-	fun f(): Int {
-		return 42
-	}
+	val f: Int
+		get() =
+			42
 
 	/**
 	 * @return 42
