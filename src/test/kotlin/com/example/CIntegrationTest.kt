@@ -9,6 +9,6 @@ import org.junit.runners.JUnit4
 class CIntegrationTest {
 	@Test
 	fun t() {
-		assertEquals(42, C.g())
+		assertEquals(42, C.g)
 	}
 }

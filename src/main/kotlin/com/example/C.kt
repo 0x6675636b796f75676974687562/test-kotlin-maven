@@ -14,7 +14,7 @@ object C {
 	/**
 	 * @return 42
 	 */
-	fun g(): Int {
-		return 42
-	}
+	val g: Int
+		get() =
+			42
 }
