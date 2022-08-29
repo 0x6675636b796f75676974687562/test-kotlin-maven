@@ -19,7 +19,7 @@ jobs:
 
       - id: diktat
         name: 'diKTat Check using a GitHub Action'
-        uses: 0x6675636b796f75676974687562/benedi.kt@master
+        uses: saveourtool/benedikt@v1
         with:
           input-paths: |
             **/*.kt
