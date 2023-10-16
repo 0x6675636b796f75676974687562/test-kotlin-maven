@@ -26,7 +26,7 @@ jobs:
         java-distribution: [ 'zulu', 'temurin' ]
         java-version: [ '8', '11', '17' ]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: 'diKTat Check using a GitHub Action'
         uses: saveourtool/benedikt@v1
