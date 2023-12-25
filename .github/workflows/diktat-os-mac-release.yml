@@ -12,6 +12,6 @@ jobs:
       - uses: actions/checkout@v3
 
       - name: 'diKTat Check using a GitHub Action'
-        uses: saveourtool/benedikt@v1
+        uses: saveourtool/benedikt@v2
         with:
           debug: ${{ false }}
